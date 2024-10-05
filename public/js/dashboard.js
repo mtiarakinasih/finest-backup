@@ -7,7 +7,7 @@ $(function () {
         type: "get",
         dataType: "json",
         success: (data) => {
-            $("#budget-title").text(data.title);
+            $("#budget-title").text(data.title);F
         },
         error: (jqXHR, exception) => {
             if (jqXHR.status == 500) {
@@ -22,12 +22,13 @@ $(function () {
         type: "get",
         dataType: "json",
         success: (data) => {
-            currentBudgetIncome = data[0]; //assiagn to variable for later use ****
+            currentBudgetIncome = data[0]; //assign to variable for later use ****
             $("#total-income").text(data[0]);
             currentBudgetExpense = data[1]; // ****
             $("#total-expense").text(data[1]);
             $("#total-balance").text(data[2]);
-            $("#cash-on-hand").text(data[3].balance);
+            const investAmount = data[3] && data[3].invest !== null ? data[3].invest : 0;
+            $("#invest").text(accounting.formatMoney(investAmount));
         },
     });
 

@@ -33,13 +33,15 @@ class LoginController extends Controller
      */
     // protected $redirectTo = RouteServiceProvider::HOME;
     protected function authenticated()
-    {
-        (new CurrentBudgetController())->whetherBudgetIsExpired();
-        (new CacheRemember())->cacheAll();
-        if (Auth::check()) {
-            return redirect('api/home');
-        }
+{
+    (new CurrentBudgetController())->whetherBudgetIsExpired();
+    (new CacheRemember())->cacheAll();
+    
+    if (Auth::check()) {
+        return redirect('/api/home'); // Menggunakan jalur absolut
     }
+}
+
 
     /**
      * Create a new controller instance.

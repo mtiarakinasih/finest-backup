@@ -42,27 +42,27 @@ class AjaxDashboardController extends Controller
      * @return json
      */
     public function generalInfo()
-    {
-        $this->__currentBudgetId = Budget::getCurrentBudgetId();
-        $incomeIds = Category::getAllIdHavingDebitEntry();
-        $expenseIds = Category::getAllIdHavingCreditEntry();
+{
+    $this->__currentBudgetId = Budget::getCurrentBudgetId();
+    $incomeIds = Category::getAllIdHavingDebitEntry();
+    $expenseIds = Category::getAllIdHavingCreditEntry();
 
-        $totalIncome = Transaction::where('budget_id', $this->__currentBudgetId)
-            ->whereIn('category_id', $incomeIds)
-            ->sum('amount');
+    $totalIncome = Transaction::where('budget_id', $this->__currentBudgetId)
+        ->whereIn('category_id', $incomeIds)
+        ->sum('amount');
 
-        $totalExpense = Transaction::where('budget_id', $this->__currentBudgetId)
-            ->whereIn('category_id', $expenseIds)
-            ->sum('amount');
+    $totalExpense = Transaction::where('budget_id', $this->__currentBudgetId)
+        ->whereIn('category_id', $expenseIds)
+        ->sum('amount');
 
-        $totalBalance = PaymentOption::sum('balance');
+    $totalBalance = PaymentOption::sum('balance');
 
-        $cashOnHandAmount = PaymentOption::first('balance');
+    $invest = PaymentOption::where('title', 'Invest')->first()->balance ?? 0;
 
-        return response()->json([
-            $totalIncome, $totalExpense, $totalBalance, $cashOnHandAmount
-        ], 200);
-    }
+    return response()->json([
+        $totalIncome, $totalExpense, $totalBalance, ['balance' => $invest]
+    ], 200);
+}
 
     /**
      * Dispalys current balances

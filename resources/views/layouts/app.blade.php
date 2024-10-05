@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'PFMS') }}</title>
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{ asset('logo.png') }}" type="image/x-icon" />
 
     {{-- Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -58,6 +58,7 @@
 
     <!-- Custom Js -->
     <script src="{{ asset('js/custom.js') }}"></script>
+    
 </body>
 
 </html>

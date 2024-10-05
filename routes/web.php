@@ -10,7 +10,11 @@ use App\Http\Controllers\{
     HomeController,
     PaymentOptionController,
     TransactionController,
+    IncomeController,
 };
+
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\FinancialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,16 +33,23 @@ Route::get('/', function () {
 
 Route::view('template', '/template');
 
-Auth::routes(['register' => false]);
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
+
+Auth::routes(['register' => true]);
 
 Route::middleware('auth')->group(function () {
     Route::prefix('/api')->group(function () {
         Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+        // Income routes
+        Route::post('/income', [IncomeController::class, 'store'])->name('income.store');
+        Route::get('/income/total', [IncomeController::class, 'getTotal'])->name('income.total');
+Route::get('/financial-allocation', [FinancialController::class, 'getFinancialAllocation'])->name('financial.allocation');
         //Ajax and Dashboard Controller
         Route::get('balances/current', [AjaxDashboardController::class, 'currentBalances']);
-        Route::get('budgets/current/name', [AjaxDashboardController::class, 'getCurrentBudget']); // not found throw message
-        Route::get('budgets/current/amount', [AjaxDashboardController::class, 'currentBudgetAmount']); // not found switch to latest
+        Route::get('budgets/current/name', [AjaxDashboardController::class, 'getCurrentBudget']);
+        Route::get('budgets/current/amount', [AjaxDashboardController::class, 'currentBudgetAmount']);
         Route::get('budgets/previous', [AjaxDashboardController::class, 'previousBudgets']);
         Route::get('dashboard/general-info', [AjaxDashboardController::class, 'generalInfo']);
         Route::get('transactions/ten-income', [AjaxDashboardController::class, 'tenIncomes']);
@@ -56,7 +67,6 @@ Route::middleware('auth')->group(function () {
         Route::get('budgets/show/{id}', [BudgetController::class, 'show']);
         Route::get('budgets/create', [BudgetController::class, 'create']);
         Route::post('budgets/store', [BudgetController::class, 'store']);
-        // *** end budget term is coming soon
 
         //Category Controller
         Route::get('categories/index', [CategoryController::class, 'index']);
@@ -69,7 +79,6 @@ Route::middleware('auth')->group(function () {
 
         //PaymentOption Controller
         Route::get('payment-options/index', [PaymentOptionController::class, 'index']);
-        //there is a simple custom class for ajax request
         Route::get('payment-options/amount/{id}', [PaymentOptionController::class, 'amount']);
         Route::get('payment-options/show/{id}', [PaymentOptionController::class, 'show']);
         Route::get('payment-options/create', [PaymentOptionController::class, 'create']);
@@ -84,4 +93,10 @@ Route::middleware('auth')->group(function () {
         Route::get('transactions/create', [TransactionController::class, 'create']);
         Route::post('transactions/store', [TransactionController::class, 'store']);
     });
+
+    Route::post('/logout', function () {
+        Auth::logout();
+        return redirect('/login'); // Redirect ke halaman login
+    })->name('logout');
+    
 });

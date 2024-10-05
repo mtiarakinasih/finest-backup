@@ -1,14 +1,13 @@
 <aside class="vertical-nav bg-white" id="sidebar">
     <div class="py-4 px-3 mb-4 bg-light">
         <div class="media d-flex align-items-center">
-            <img loading="lazy" src="{{ asset('icons/robot.svg') }}" alt="robot icon" width="80" height="80"
-                class="mr-3 rounded-circle img-thumbnail shadow-sm">
+        <img loading="lazy" src="{{ asset('logo.png') }}" alt="robot icon" width="80" height="80"class="mr-3 rounded-circle img-thumbnail shadow-sm">
             <div class="media-body">
-                <h4 class="m-0 text-6 font-weight-bold">{{ Auth::user()->name }}</h4>
-                <i class="fa fa-cirle text-success mr-3"></i>
-                <small class="font-weight-normal text-muted mb-0">
-                    Admin
-                </small>
+                <h4 class="">{{ Auth::user()->name }}</h4>
+                <div class="mt-1"> <!-- Menambahkan margin top untuk jarak -->
+                    <i class="fa fa-circle text-success mr-1"></i> <!-- Memperbaiki icon fa-circle -->
+                    <small class="font-weight-normal text-muted mb-0">{{ Auth::user()->job }}</small>
+                </div>
             </div>
         </div>
     </div>
@@ -32,7 +31,7 @@
         </li>
     </ul>
 
-    <p class="text-gray font-weight-bold text-uppercase px-3 pt-2 small mb-0">Budget</p>
+    <!-- <p class="text-gray font-weight-bold text-uppercase px-3 pt-2 small mb-0">Budget</p>
     <ul class="nav flex-column bg-white mb-0">
         <li class="nav-item">
             <a href="{{ url('api/budgets/current') }}"
@@ -73,9 +72,9 @@
                 View All Categories
             </a>
         </li>
-    </ul>
+    </ul> -->
 
-    <p class="text-gray font-weight-bold text-uppercase px-3 pt-2 small mb-0">Payment Options</p>
+    <!-- <p class="text-gray font-weight-bold text-uppercase px-3 pt-2 small mb-0">Payment Options</p>
     <ul class="nav flex-column bg-white mb-0">
         <li class="nav-item">
             <a href="{{ url('api/payment-options/create') }}" class="nav-link text-dark">
@@ -105,34 +104,17 @@
                 View Transactions
             </a>
         </li>
-    </ul>
-    <footer class="footer mt-2">
-        <div class="w-100">
-            <div class="text-center">
-                <small>Designed &amp; Developed by iBishek</small>
-            </div>
-            <div class="text-center">
-                Free to Use
-            </div>
-        </div>
-    </footer>
-    <section class="mt-2 mb-2 sidebar-accessory">
-        <div class="row">
-            <div class="col-4">
-                <a href="#"><i class="fa fa-user-circle text-2"></i></a>
-            </div>
-            <div class="col-4">
-                <a href="#"><i class="fa fa-cog text-2"></i></a>
-            </div>
-            <div class="col-4">
-                <a href="{{ route('logout') }}" onclick="event.preventDefault();
+    </ul> -->
+    <section class="mt-2 mb-2 sidebar-accessory" style="display: flex; justify-content: center;">
+    <div>
+        <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                    <i class="fa fa-sign-out text-2"></i>
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
-            </div>
-        </div>
-    </section>
+            <i class="fa fa-sign-out text-2"></i>
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+        </form>
+    </div>
+</section>
+
 </aside>
